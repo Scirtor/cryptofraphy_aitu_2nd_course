@@ -62,7 +62,12 @@
 ### 3)
 
     If a≡b(modn), then a^2≡b^2 (modn)
-    Don't know how to solve this now
+    
+    If a ≡ b (mod n), then a - b = kn for some integer k.
+    a² - b² = (a - b)(a + b) = kn(a + b) = n[k(a + b)]
+    So n divides (a² - b²), which means a² ≡ b² (mod n).
+    
+    Answer: True
 
 ## Task 3 Structure
 
@@ -103,118 +108,85 @@
 ### 2) Find all units
     Units in Z_10: {1, 3, 7, 9}
     
-    Definition: A unit is an element that has a multiplicative inverse.
-    An element a in Z_n is a unit if and only if gcd(a, n) = 1.
-    
-    Check gcd with 10:
-    - gcd(1, 10) = 1 → unit (1⁻¹ = 1)
-    - gcd(2, 10) = 2 → not a unit
-    - gcd(3, 10) = 1 → unit (3⁻¹ = 7, since 3 · 7 = 21 ≡ 1 mod 10)
-    - gcd(4, 10) = 2 → not a unit
-    - gcd(5, 10) = 5 → not a unit
-    - gcd(6, 10) = 2 → not a unit
-    - gcd(7, 10) = 1 → unit (7⁻¹ = 3, since 7 · 3 = 21 ≡ 1 mod 10)
-    - gcd(8, 10) = 2 → not a unit
-    - gcd(9, 10) = 1 → unit (9⁻¹ = 9, since 9 · 9 = 81 ≡ 1 mod 10)
-    
-    Multiplicative inverses:
-    - 1⁻¹ = 1
-    - 3⁻¹ = 7
-    - 7⁻¹ = 3
-    - 9⁻¹ = 9
+    Units are elements with gcd(a, 10) = 1.
+    - gcd(1, 10) = 1 → unit
+    - gcd(3, 10) = 1 → unit
+    - gcd(7, 10) = 1 → unit
+    - gcd(9, 10) = 1 → unit
 
 ### 3) Identify elements that do not have multiplicative inverses
     Elements without multiplicative inverses in Z_10: {0, 2, 4, 5, 6, 8}
     
-    - 0: Never has an inverse (0 · anything = 0, never 1)
-    - 2, 4, 5, 6, 8: These are zero divisors (gcd(a, 10) > 1), 
-      and zero divisors cannot have inverses because if a·b = 0 
-      and a had an inverse, we'd get b = 0, a contradiction.
+    These are the zero divisors and 0.
 
 ## Task 5 (Theory)
 
 Prove that Z_n is a field if and only if n is a prime number.
 
-    Proof:
+    If n is prime:
+    - For any nonzero a in Z_n, gcd(a, n) = 1
+    - So a has a multiplicative inverse
+    - Therefore Z_n is a field
     
-    A field is a commutative ring where every nonzero element has a multiplicative inverse.
+    If Z_n is a field:
+    - Every nonzero element has an inverse
+    - If n is composite, say n = ab with 1 < a, b < n
+    - Then a · b = n ≡ 0 (mod n)
+    - So a and b are zero divisors and cannot have inverses
+    - Contradiction! So n must be prime.
     
-    Part 1: If n is prime, then Z_n is a field (⇒)
-    
-    Assume n is prime.
-    - Z_n = {0, 1, 2, ..., n-1}
-    - For any nonzero element a ∈ Z_n (where 1 ≤ a ≤ n-1):
-      * Since n is prime and 1 ≤ a < n, we have gcd(a, n) = 1
-      * By Bézout's identity, there exist integers x, y such that ax + ny = 1
-      * Taking this equation mod n: ax ≡ 1 (mod n)
-      * Therefore, x mod n is the multiplicative inverse of a
-    - Every nonzero element has an inverse, so Z_n is a field.
-    
-    Part 2: If Z_n is a field, then n is prime (⇐)
-    
-    Assume Z_n is a field. We prove n must be prime by contradiction.
-    
-    Suppose n is composite (not prime). Then n = ab where 1 < a < n and 1 < b < n.
-    - Both a and b are nonzero elements in Z_n
-    - But a · b = n ≡ 0 (mod n)
-    - This means a · b = 0, so a and b are zero divisors
-    - If a has a multiplicative inverse a⁻¹, then:
-      * a · b = 0
-      * a⁻¹ · (a · b) = a⁻¹ · 0
-      * (a⁻¹ · a) · b = 0
-      * 1 · b = 0
-      * b = 0
-    - But b ≠ 0 (since 1 < b < n), which is a contradiction!
-    - Therefore, a cannot have a multiplicative inverse.
-    - This contradicts our assumption that Z_n is a field.
-    
-    Conclusion: Z_n is a field if and only if n is prime. ∎
-    
-    Key insight: In Z_n, an element a has a multiplicative inverse if and only if 
-    gcd(a, n) = 1. When n is prime, gcd(a, n) = 1 for all nonzero a, so every 
-    nonzero element has an inverse.
+    Therefore, Z_n is a field if and only if n is prime.
 
 ## Task 6
 
 Determine whether the ring Z_8 is an integral domain.
 
-    Definition: An integral domain is a commutative ring with unity (1) 
-    that has NO zero divisors.
-    
-    A zero divisor is a nonzero element a such that a·b = 0 for some nonzero b.
-    
     Z_8 = {0, 1, 2, 3, 4, 5, 6, 7}
     
     Check for zero divisors:
-    2 · 4 = 8 ≡ 0 (mod 8)  → 2 and 4 are both nonzero, but their product is 0
+    2 · 4 = 8 ≡ 0 (mod 8)
     
-    Since we found zero divisors (2 and 4), Z_8 is NOT an integral domain.
-    
-    Additional zero divisor pairs in Z_8:
-    - 2 · 4 = 8 ≡ 0 (mod 8)
-    - 4 · 2 = 8 ≡ 0 (mod 8)
-    - 4 · 6 = 24 ≡ 0 (mod 8)
-    - 6 · 4 = 24 ≡ 0 (mod 8)
-    
-    Answer: Z_8 is NOT an integral domain because it contains zero divisors.
-    
-    Note: Z_n is an integral domain if and only if n is prime.
+    Since 2 and 4 are nonzero but their product is 0, Z_8 has zero divisors.
+    Therefore Z_8 is NOT an integral domain.
 
 ## Task 7
 
-Compute using fast modular exponentiation:
+Compute:  
+7^123 mod 11
 
-7^123  mod 11
+By Fermat’s little theorem:  
+7^10 ≡ 1 (mod 11)
+
+Reduce the exponent:  
+123 ≡ 3 (mod 10)
+
+So:  
+7^123 ≡ 7^3 = 343 ≡ 2 (mod 11)
+
+**Answer:** 2
+
+---
 
 ## Task 8
 
-Compare the number of operations required for:
+Compare the number of operations when computing:  
+a^1024 mod n
 
-naiveexponentiation
+### Naive exponentiation
 
-binary (fast) exponentiation
+a^1024 = a · a · ... · a (1024 times)
 
-when computing a^1024 mod n.
+- Multiplications: 1023  
+- Time complexity: O(k)
+
+### Binary (fast) exponentiation
+
+1024 = 2^10
+
+- Squarings: 10  
+- Extra multiplications: 0  
+- Total operations: ≈ 10  
+- Time complexity: O(log k)
 
 ## Task 9 (Algorithmic)
 
@@ -222,7 +194,24 @@ Describe an algorithm that computes
 
 a^k  mod  n
 
-in O(log⁡ k)time.
+in O(log k) time.
+
+    Algorithm:
+    ```
+    result = 1
+    base = a mod n
+    
+    while k > 0:
+        if k is odd:
+            result = (result * base) mod n
+        base = (base * base) mod n
+        k = k / 2
+    
+    return result
+    ```
+    
+    This works by using binary representation of k. Each iteration processes one bit.
+    Time complexity: O(log k) because we process log₂(k) bits.
 
 ## Task 10
 
@@ -230,9 +219,17 @@ in O(log⁡ k)time.
 
 ### 1) Z_9
 
+    Z_9 is NOT a field because 9 is not prime (9 = 3²).
+    Example: 3 · 3 = 9 ≡ 0 (mod 9), so 3 is a zero divisor.
+
 ### 2) Z_11
 
+    Z_11 IS a field because 11 is prime.
+
 ### 3) Z_15
+
+    Z_15 is NOT a field because 15 is not prime (15 = 3 · 5).
+    Example: 3 · 5 = 15 ≡ 0 (mod 15), so 3 and 5 are zero divisors.
 
 ## Task 11
 
@@ -240,15 +237,42 @@ in O(log⁡ k)time.
 
 ### 1) Find the multiplicative inverse of each nonzero element
 
+    1⁻¹ = 1 (since 1 · 1 = 1)
+    2⁻¹ = 4 (since 2 · 4 = 8 ≡ 1 mod 7)
+    3⁻¹ = 5 (since 3 · 5 = 15 ≡ 1 mod 7)
+    4⁻¹ = 2 (since 4 · 2 = 8 ≡ 1 mod 7)
+    5⁻¹ = 3 (since 5 · 3 = 15 ≡ 1 mod 7)
+    6⁻¹ = 6 (since 6 · 6 = 36 ≡ 1 mod 7)
+
 ### 2) Verify that every nonzero element has an inverse
+
+    Since 7 is prime, gcd(a, 7) = 1 for all a in {1, 2, 3, 4, 5, 6}.
+    So every nonzero element has an inverse. F_7 is a field.
 
 ## Task 12 (Core)
 
     Find all primitive elements of the field F_7
+    
+    Test each element to find order 6:
+    
+    1: order = 1
+    2: 2³ = 8 ≡ 1 mod 7, order = 3
+    3: 3⁶ = 15 ≡ 1 mod 7, order = 6 ✓
+    4: 4³ = 8 ≡ 1 mod 7, order = 3
+    5: 5⁶ = 15 ≡ 1 mod 7, order = 6 ✓
+    6: 6² = 36 ≡ 1 mod 7, order = 2
+    
+    Primitive elements: {3, 5}
 
 ## Task 13
 
 Prove that the multiplicative group has order q-1
+
+    F_q has q elements: {0, 1, 2, ..., q-1}
+    F_q* = F_q \ {0} (all nonzero elements)
+    
+    Since F_q has q elements and 0 is not in F_q*, we have:
+    |F_q*| = q - 1
 
 ## Task 14 (Advanced)
 
@@ -256,11 +280,37 @@ Prove that the multiplicative group has order q-1
 
 ### 1) Find an element of order 10
 
+    Test 2:
+    2¹ = 2
+    2² = 4
+    2⁵ = 32 ≡ 10 mod 11
+    2¹⁰ = 100 ≡ 1 mod 11
+    
+    Check divisors: 2¹ ≠ 1, 2² ≠ 1, 2⁵ ≠ 1, 2¹⁰ = 1
+    So order of 2 is 10.
+
 ### 2) Verify that it generates the multiplicative group
+
+    Powers of 2: {2⁰, 2¹, ..., 2⁹} = {1, 2, 4, 8, 5, 10, 9, 7, 3, 6} = F_11*
+    So 2 generates F_11*.
 
 ## Task 15 (Theoretical)
 
 Prove that the multiplicative group of any finite field is cyclic
+
+    Let |F_q*| = n = q - 1.
+    
+    For each divisor d of n, let ψ(d) be the number of elements of order d.
+    By Lagrange's theorem, every element has order dividing n.
+    
+    If an element has order d, it's a root of xᵈ - 1. Over a field, this polynomial has at most d roots.
+    So ψ(d) ≤ φ(d) for all d.
+    
+    We have Σ(d|n) ψ(d) = n and Σ(d|n) φ(d) = n.
+    Since ψ(d) ≤ φ(d) and the sums are equal, we must have ψ(d) = φ(d) for all d.
+    
+    In particular, ψ(n) = φ(n) > 0, so there exists an element of order n.
+    This element generates F_q*, so F_q* is cyclic.
 
 ## Task 16
 
@@ -268,12 +318,46 @@ Prove that the multiplicative group of any finite field is cyclic
 
 ### 1) Is Z_n a field?
 
-### 2) Find zero divizors in Z_n
+    No, Z_n is NOT a field because n = pq is composite.
+    Since p · q = n ≡ 0 (mod n), p and q are zero divisors and cannot have inverses.
+
+### 2) Find zero divisors in Z_n
+
+    Zero divisors are elements with gcd(a, n) > 1.
+    Since n = pq, the zero divisors are:
+    - Multiples of p: {p, 2p, 3p, ..., (q-1)p}
+    - Multiples of q: {q, 2q, 3q, ..., (p-1)q}
+    
+    Example: n = 15 = 3 · 5
+    Zero divisors: {3, 5, 6, 9, 10, 12}
 
 ## Task 17 (Cryptography-Inspired)
 
-    Let p = 23, g =5
+    Let p = 23, g = 5
 
-### 1) Verify whether g is a generator of
+### 1) Verify whether g is a generator of Z_23*
+
+    |Z_23*| = 22
+    Check if order of 5 is 22:
+    
+    Proper divisors of 22: 1, 2, 11
+    5¹ = 5 ≠ 1
+    5² = 25 ≡ 2 ≠ 1
+    5¹¹ = 22 ≠ 1 (from part 2)
+    5²² = (5¹¹)² = 22² = 484 ≡ 1 mod 23
+    
+    Since 5²² = 1 and no smaller power equals 1, order of 5 is 22.
+    So 5 IS a generator of Z_23*.
 
 ### 2) Compute 5^11 mod 23
+
+    11 = 1011₂ = 8 + 2 + 1
+    
+    5¹ mod 23 = 5
+    5² mod 23 = 2
+    5⁴ mod 23 = 4
+    5⁸ mod 23 = 16
+    
+    5¹¹ mod 23 = 5⁸ · 5² · 5¹ = 16 · 2 · 5 = 160 ≡ 22 mod 23
+    
+    Answer: 5¹¹ mod 23 = 22
