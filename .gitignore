@@ -1,0 +1,23 @@
+﻿# Large archive files
+*.rar
+*.zip
+*.7z
+*.tar
+*.tar.gz
+*.tar.bz2
+
+# Large binary files
+*.pdf
+*.pptx
+*.docx
+*.xlsx
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
